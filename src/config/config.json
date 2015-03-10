@@ -1,0 +1,7 @@
+{
+	"static" :"public",
+	"views" :"views",
+	"extension" :".tmpl",
+	"adminpath" :"admin"
+	
+}

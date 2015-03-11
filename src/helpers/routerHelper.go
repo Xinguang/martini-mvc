@@ -10,9 +10,9 @@ import (
 	"strings"
 )
 
-const _methodname ExRegexp = "(?P<controller>[A-Z][a-z]+)(?P<action>[A-Z][a-z]+)(?P<method>[A-Z][a-z]+)"
+const _methodname ExRegexp = "(?P<controller>[A-Z][a-z]+)(?P<action>[A-Z][a-z]+)?(?P<method>[A-Z][a-z]+)?"
 const _id string = "(:id)?"
-const _slash string = "(\\/+)"
+const _slash string = "(\\/*)"
 
 type appRouter struct {
 	*martini.ClassicMartini
@@ -52,7 +52,10 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 			controller := strings.ToLower(res["controller"])
 			action := strings.ToLower(res["action"])
 			method := strings.ToLower(res["method"])
-			if len(controller) > 0 && len(action) > 0 {
+			if "default" == controller {
+				r.Get(_slash, f.Interface())
+				print(groupurl + _slash + "\n")
+			} else if len(controller) > 0 && len(action) > 0 {
 				url := controller + _slash + action + "(" + _slash + _id + ")?"
 				switch method {
 				case "post":

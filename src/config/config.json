@@ -2,6 +2,16 @@
 	"static" :"public",
 	"views" :"views",
 	"extension" :".tmpl",
-	"adminpath" :"admin"
+	"adminpath" :"admin",
+	
+	"database" :{
+		"name":"test",
+		"user":"",
+		"password":"",
+		"host":{
+			"read" :"192.168.0.31",
+			"write" :"192.168.0.30"
+		}
+	}
 	
 }

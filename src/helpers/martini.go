@@ -57,7 +57,7 @@ func (c *webConfig) getRenderer() martini.Handler {
 		Directory: c.Views, // Specify what path to load the templates from.
 		//Layout:     "layout/layout",       // Specify a layout template. Layouts can call {{ yield }} to render the current template.
 		Extensions:      []string{c.Extension},            // Specify extensions to load for templates.
-		Funcs:           []template.FuncMap{getFuncMap()}, // Specify helper function maps for templates to access.
+		Funcs:           []template.FuncMap{GetFuncMap()}, // Specify helper function maps for templates to access.
 		Delims:          render.Delims{"{{", "}}"},        // Sets delimiters to the specified strings.
 		Charset:         "UTF-8",                          // Sets encoding for json and html content-types. Default is "UTF-8".
 		IndentJSON:      true,                             // Output human readable JSON

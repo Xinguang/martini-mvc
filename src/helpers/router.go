@@ -48,7 +48,7 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 		for i := 0; i < s.NumMethod(); i++ {
 			f := s.Method(i)
 			methodName := t.Method(i).Name
-			res := _methodname.findAll(methodName)
+			res := _methodname.FindAll(methodName)
 			controller := strings.ToLower(res["controller"])
 			action := strings.ToLower(res["action"])
 			method := strings.ToLower(res["method"])

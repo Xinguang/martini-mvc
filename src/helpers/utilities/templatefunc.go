@@ -1,4 +1,4 @@
-package helpers
+package utilities
 
 import (
 	"html/template"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func getFuncMap() template.FuncMap {
+func GetFuncMap() template.FuncMap {
 	f := funcMap{}
 	return template.FuncMap{
 		"nl2br":      f.nl2br,

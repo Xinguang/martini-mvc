@@ -15,6 +15,7 @@ type webConfig struct {
 	Views     string   `json:"views"`
 	Extension string   `json:"extension"`
 	Admin     string   `json:"adminpath"`
+	Secret    string   `json:"secret"`
 	Database  DbConfig `json:"database"`
 }
 
@@ -25,6 +26,7 @@ func Initialization() *martini.ClassicMartini {
 		Views:     "views",
 		Extension: ".tmpl",
 		Admin:     "admin",
+		Secret:    "13B3AE09594A1A6B4C2E2046F098B6A6568E6F48979DB871A4FBC0FD861464FA", //demo.kansea.com
 	}
 	if e == nil {
 		json.Unmarshal(configfile, &w)
@@ -32,31 +34,33 @@ func Initialization() *martini.ClassicMartini {
 	return w.getMartini()
 }
 
-func (c *webConfig) getMartini() *martini.ClassicMartini {
+func (w *webConfig) getMartini() *martini.ClassicMartini {
 
 	m := martini.Classic()
 	//m.Use(martini.Logger())
 	m.Use(martini.Recovery())
-	if len(c.Static) != 0 {
-		m.Use(martini.Static(c.Static))
+	if len(w.Static) != 0 {
+		m.Use(martini.Static(w.Static))
 	}
-	m.Use(c.getRenderer())
-	m.Use(DataHelper(c.Database))
-	newRouter(m, c.Admin)
+	m.Use(w.getRenderer())
+	m.Use(DataHelper(w.Database))
+	newRouter(m, w.Admin)
 	m.Use(secure.Secure(secure.Options{
 		SSLRedirect: true,
-		SSLHost:     "localhost:443", // This is optional in production. The default behavior is to just redirect the request to the https protocol. Example: http://github.com/some_page would be redirected to https://github.com/some_page.
+		SSLHost:     ":443", // This is optional in production. The default behavior is to just redirect the request to the https protocol. Example: http://github.com/some_page would be redirected to https://github.com/some_page.
 	}))
+	m.Use(w.Session())
+	m.Use(w.Auth)
 	//m.RunOnAddr(":80")
 	//m.Run()
 	return m
 }
 
-func (c *webConfig) getRenderer() martini.Handler {
+func (w *webConfig) getRenderer() martini.Handler {
 	return render.Renderer(render.Options{
-		Directory: c.Views, // Specify what path to load the templates from.
+		Directory: w.Views, // Specify what path to load the templates from.
 		//Layout:     "layout/layout",       // Specify a layout template. Layouts can call {{ yield }} to render the current template.
-		Extensions:      []string{c.Extension},            // Specify extensions to load for templates.
+		Extensions:      []string{w.Extension},            // Specify extensions to load for templates.
 		Funcs:           []template.FuncMap{GetFuncMap()}, // Specify helper function maps for templates to access.
 		Delims:          render.Delims{"{{", "}}"},        // Sets delimiters to the specified strings.
 		Charset:         "UTF-8",                          // Sets encoding for json and html content-types. Default is "UTF-8".

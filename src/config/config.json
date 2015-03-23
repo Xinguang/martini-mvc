@@ -3,6 +3,7 @@
 	"views" :"views",
 	"extension" :".tmpl",
 	"adminpath" :"admin",
+	"secret" :"13B3AE09594A1A6B4C2E2046F098B6A6568E6F48979DB871A4FBC0FD861464FA",
 	
 	"database" :{
 		"name":"test",

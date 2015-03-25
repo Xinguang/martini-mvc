@@ -24,7 +24,7 @@ func newRouter(m *martini.ClassicMartini, adminpath string) {
 	app.frontendRouter()
 	app.NotFound(func(r render.Render) {
 		opt := render.HTMLOptions{
-			Layout: "backend/layout/layout",
+			Layout: "frontend/layout/layout",
 		}
 		r.HTML(404, "404", "notfound", opt)
 	})
@@ -57,22 +57,42 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 				print(groupurl + _slash + "\n")
 			} else if len(controller) > 0 && len(action) > 0 {
 				url := controller + _slash + action + "(" + _slash + _id + ")?"
-				switch method {
-				case "post":
-					r.Post(url, f.Interface())
-				case "delete":
-					r.Delete(url, f.Interface())
-				case "patch":
-					r.Patch(url, f.Interface())
-				case "put":
-					r.Put(url, f.Interface())
-				default: //"get"
-					r.Get(url, f.Interface())
-					if "index" == action {
-						r.Get(controller, f.Interface())
-					}
+				app.setRouter(r, url, method, f.Interface())
+				if "index" == action {
+					app.setRouter(r, controller, method, f.Interface())
 				}
+				/*
+					switch method {
+					case "post":
+						r.Post(url, f.Interface())
+					case "delete":
+						r.Delete(url, f.Interface())
+					case "patch":
+						r.Patch(url, f.Interface())
+					case "put":
+						r.Put(url, f.Interface())
+					default: //"get"
+						r.Get(url, f.Interface())
+						if "index" == action {
+							r.Get(controller, f.Interface())
+						}
+					}
+				*/
 			}
 		}
 	})
+}
+func (app appRouter) setRouter(r martini.Router, url string, method string, i interface{}) {
+	switch method {
+	case "post":
+		r.Post(url, i)
+	case "delete":
+		r.Delete(url, i)
+	case "patch":
+		r.Patch(url, i)
+	case "put":
+		r.Put(url, i)
+	default: //"get"
+		r.Get(url, i)
+	}
 }

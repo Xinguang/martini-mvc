@@ -1,11 +1,10 @@
 package utilities
 
 import (
-	//"fmt"
 	"github.com/go-martini/martini"
 	"gopkg.in/mgo.v2"
-	//"gopkg.in/mgo.v2/bson"
-	//"log"
+	"reflect"
+	"strings"
 )
 
 type DbConfig struct {
@@ -19,8 +18,8 @@ type dbHostConfig struct {
 	Write string `json:"write"`
 }
 type DbSession struct {
-	Read  *mgo.Database
-	Write *mgo.Database
+	read  *mgo.Database
+	write *mgo.Database
 }
 
 func DataHelper(dbc DbConfig) martini.Handler {
@@ -32,12 +31,6 @@ func DataHelper(dbc DbConfig) martini.Handler {
 	if errWrite != nil {
 		panic(errWrite)
 	}
-	/*
-		defer func() {
-			sessionRead.Close()
-			sessionWrite.Close()
-		}()
-	*/
 	sessionRead.SetMode(mgo.Monotonic, true)
 	sessionWrite.SetMode(mgo.Monotonic, true)
 
@@ -46,8 +39,8 @@ func DataHelper(dbc DbConfig) martini.Handler {
 		sW := sessionRead.Clone()
 
 		var db = DbSession{
-			Read:  sR.DB(dbc.Name),
-			Write: sW.DB(dbc.Name),
+			read:  sR.DB(dbc.Name),
+			write: sW.DB(dbc.Name),
 		}
 		c.Map(db)
 		defer sR.Close()
@@ -57,6 +50,24 @@ func DataHelper(dbc DbConfig) martini.Handler {
 
 }
 
+func (db DbSession) Read(i interface{}) *mgo.Collection {
+	return db.read.C(db.getTableName(i))
+}
+func (db DbSession) Write(i interface{}) *mgo.Collection {
+	return db.write.C(db.getTableName(i))
+}
+
+func (db DbSession) getTableName(i interface{}) string {
+	v := reflect.ValueOf(i)
+	return strings.ToLower(v.Type().Name())
+}
+
+//item := models.Item{}
+/*
+	users := []models.User{}
+	db.Read(models.User{}).Find(bson.M{}).All(&users)
+	fmt.Println(users)
+*/
 /*
 
 type Person struct {

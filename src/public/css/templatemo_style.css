@@ -40,13 +40,11 @@ h1, h2, h3 { font-weight: 300; }
 
 h2, h3, footer i { font-size: 18px; }
 
-p, form, ul { font-size: 14px; }
+p, form, ul ,button,footer p, address { font-size: 14px; }
 
 .subtitle { font-weight: bold; color: #909090; }
 
 .portfolio-group .detail p { font-size: 12px; }
-
-footer p, address {	font-size: 14px; }
 
 #templatemo_timeline .time_line_paragraph h1 { font-size: 24px; }
 
@@ -151,6 +149,8 @@ p.justify { text-align: justify; }
 .fa { margin: 6px; }
 .left { float: left; }
 .right { float: right; }
+.left-text { text-align: left; }
+.right-text { text-align: right; }
 .center-text { text-align: center; }
 
 /* 3. Portfolio styles
@@ -205,15 +205,6 @@ p.justify { text-align: justify; }
 	display:block; 
 	width:100%; 
 	height:100%; 
-}
-.portfolio-item .btn {
-	width: 80px;
-	height: 30px;
-	border: 1px solid rgba(0, 0, 0, 0.09);
-	background-color: rgba(255, 255, 255, 0.5);
-	-webkit-box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
-	-ms-box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
-	box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
 }
 .portfolio-item .btn:hover { background-color: #ddd; }
 .pagination { width: 100%; }
@@ -328,45 +319,29 @@ p.justify { text-align: justify; }
 	height: 400px; 
 }
 form {
-	float: right;
 	font-weight: 400;	
   	max-width: 470px;
   	width: 40%;
+  	margin: auto;
 }
 address {
 	margin: 15px 0px;
 }
-span.btn {
-	display: block;
-	font-size: 12px;
-	line-height: 30px;
-	margin: 0 auto;
-	text-transform: uppercase;
-	border: none; 
-	cursor: pointer; 
-}
-.templatemo_form button {
+.templatemo_form .btn {
   width: 160px;
   line-height: 34px;
   color: #ffffff;
   border-radius: 0px;
   background: #a2c044;
   border: none;
-  margin-top: 10px;
+  margin: 10px 5px;
+	border: 1px solid rgba(0, 0, 0, 0.09);
+	-webkit-box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
+	-ms-box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
+	box-shadow: 1px 1px 1px rgba(51, 51, 51, 0.44);
 }
-.templatemo_form input {
-	height: 34px;	
-	margin-bottom: 5px;
-}
-.templatemo_form textarea {
-  	height: 130px;
-}
-.templatemo_form input, .templatemo_form textarea {
-	font-family: 'Open Sans', sans-serif; /* for Firefox */
-	font-size: 14px; 
-	padding: 6px 2%;
-	width: 95%;
-	border: 1px solid #e5e5e5;
+.templatemo_form .btn a {
+  color: #ffffff;
 }
 
 /* 7. Media queries 
@@ -455,4 +430,70 @@ span.btn {
 	.main-nav ul.nav li a { padding: 2%; }
 	.main-nav ul.nav li.active { padding: 0; padding: 2% 0; }
 	.main-nav ul.nav li a:hover { padding: 2%; }
+}
+
+
+
+/*           */
+input.inputtext {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: -webkit-calc(3em + 2px);
+  height: calc(3em + 2px);
+  margin: 0 0 1em;
+  padding: 1em;
+  border: 1px solid #cccccc;
+  /*border-radius: 1.5em;*/
+  background: #fff;
+  resize: none;
+  outline: none;
+}
+input.inputtext[required]:focus {
+  border-color: #00bafa;
+}
+input.inputtext[required]:focus + label[placeholder]:before {
+  color: #00bafa;
+}
+input.inputtext[required]:focus + label[placeholder]:before,
+input.inputtext[required]:valid + label[placeholder]:before {
+  -webkit-transition-duration: .2s;
+  transition-duration: .2s;
+  -webkit-transform: translate(0, -1.5em) scale(0.9, 0.9);
+  -ms-transform: translate(0, -1.5em) scale(0.9, 0.9);
+  transform: translate(0, -1.5em) scale(0.9, 0.9);
+}
+input.inputtext[required]:invalid + label[placeholder][alt]:before {
+  content: attr(alt);
+}
+input.inputtext[required] + label[placeholder] {
+  display: block;
+  pointer-events: none;
+  line-height: 20px;/*line-height: 2.3em;*/
+  margin-top: -webkit-calc(-3em - 2px);
+  margin-top: calc(-3em - 2px);
+  margin-bottom: -webkit-calc((3em - 1em) + 2px);
+  margin-bottom: calc((3em - 1em) + 2px);
+}
+input.inputtext[required] + label[placeholder]:before {
+  content: attr(placeholder);
+  display: inline-block;
+  margin: 0 -webkit-calc(1em + 2px);
+  margin: 0 calc(1em + 2px);
+  padding: 0 2px;
+  color: #898989;
+  white-space: nowrap;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ffffff));
+  background-image: -webkit-linear-gradient(top, #ffffff, #ffffff);
+  background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+  -webkit-background-size: 100% 5px;
+  background-size: 100% 5px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.redfont {
+	color:#FF0000
 }

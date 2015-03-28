@@ -21,12 +21,11 @@ func (w webConfig) Auth(session sessions.Session, r render.Render, req *http.Req
 	var reg ExRegexp = ExRegexp("/(mypage)|(" + w.Admin + ")/?")
 	uri := req.URL.Path
 	if reg.Match(uri) {
-		v := session.Get(config.SessionAuthFront)
+		v := session.Get(config.SessionAuth)
 		if v == nil { //安全认证.......
 			session.Set(config.SessionRedirect, uri)
 			r.Redirect("/login", 302)
 		} else { // 获取用户信息
-			print(v.(string))
 		}
 	}
 	//session.Set("hello", "world")

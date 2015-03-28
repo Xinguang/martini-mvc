@@ -1,8 +1,8 @@
 package config
 
 const (
-	SessionToken     = "_token_"
-	SessionRedirect  = "_redirect_"
-	SessionAuthFront = "_AuthFront_"
-	SessionAuthBack  = "_AuthBack_"
+	SessionToken    = "_token_"
+	SessionCsrf     = "_CSRF_"
+	SessionRedirect = "_redirect_"
+	SessionAuth     = "_Auth_"
 )

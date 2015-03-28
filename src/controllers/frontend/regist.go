@@ -40,10 +40,12 @@ func (c Contrller) RegistIndexPost(req *http.Request, r render.Render, db DbSess
 	err := db.Read(post.User).Find(bson.M{"email": post.User.Email}).One(&post.User)
 	if nil == err {
 		post.Message = "该Email已被注册过"
+		post.User.Password = post.RePassword //防止密码泄漏
 		c.HTML(r, 403, "regist/regist", post)
 	} else {
 		post.User.Id = bson.NewObjectId()
-		post.User.Password = post.RePassword //防止密码泄漏
+		aes := Aes{}
+		post.User.Password = aes.AesEncrypt(post.User.Password)
 		errinsert := db.Write(post.User).Insert(post.User)
 		if nil == errinsert {
 			r.Redirect("/login", 301)

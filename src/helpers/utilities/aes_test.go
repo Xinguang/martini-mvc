@@ -1,11 +1,11 @@
 package utilities
 
 import (
-	"testing"
+	"fmt"
 )
 
 func Test_Aes() {
-	a := Aes{[]byte("yVHlew1jDlZpJ/zSbJ8JPjIc2dBeoLny")}
+	a := Aes{}
 
 	result, err := a.AesEncrypt("martini-mvc")
 	if err != nil {
@@ -16,5 +16,5 @@ func Test_Aes() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(origData))
+	fmt.Println(origData)
 }

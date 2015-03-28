@@ -5,17 +5,19 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
+	"github.com/starboychina/martini-mvc/src/config"
 )
 
 type Aes struct {
 	Key []byte
 }
 
-func (self Aes) AesEncrypt(input string) (string, error) {
+func (self Aes) AesEncrypt(input string) string {
 	origData := []byte(input)
+	self.Key = []byte(config.SecretAes)
 	block, err := aes.NewCipher(self.Key)
 	if err != nil {
-		return "", err
+		panic(err) //系统配置错误aes -key 错误
 	}
 	blockSize := block.BlockSize()
 	origData = self.pkcs5Padding(origData, blockSize)
@@ -23,18 +25,19 @@ func (self Aes) AesEncrypt(input string) (string, error) {
 	crypted := make([]byte, len(origData))
 	blockMode.CryptBlocks(crypted, origData)
 
-	return base64.StdEncoding.EncodeToString(crypted), nil
+	return base64.StdEncoding.EncodeToString(crypted)
 }
 
-func (self Aes) AesDecrypt(input string) ([]byte, error) {
+func (self Aes) AesDecrypt(input string) string {
+	self.Key = []byte(config.SecretAes)
 	crypted, arserr := base64.StdEncoding.DecodeString(input)
 	if arserr != nil {
-		return nil, arserr
+		panic(arserr)
 	}
 
 	block, err := aes.NewCipher(self.Key)
 	if err != nil {
-		return nil, err
+		panic(err) //系统配置错误aes -key 错误
 	}
 	blockSize := block.BlockSize()
 	blockMode := cipher.NewCBCDecrypter(block, self.Key[:blockSize])
@@ -42,7 +45,7 @@ func (self Aes) AesDecrypt(input string) ([]byte, error) {
 	// origData := crypted
 	blockMode.CryptBlocks(origData, crypted)
 	origData = self.pkcs5UnPadding(origData)
-	return origData, nil
+	return string(origData)
 }
 func (self Aes) pkcs5Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize

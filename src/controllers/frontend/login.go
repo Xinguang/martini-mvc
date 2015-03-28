@@ -42,12 +42,15 @@ func (c Contrller) LoginIndexPost(req *http.Request, r render.Render, db DbSessi
 			MaxAge: 3600 * 24 * 30, //30days
 		})
 	}
+	aes := Aes{}
+	post.User.Password = aes.AesEncrypt(post.User.Password)
 	err := db.Read(post.User).Find(bson.M{"email": post.User.Email, "password": post.User.Password}).One(&post.User)
 	if err == nil {
 		session.Set(config.SessionAuth, post.User.Id.Hex())
 		c.autoRedirect(session, r)
 	} else {
 		post.Message = "帐号或密码错误"
+		post.User.Password = ""
 		c.HTML(r, 403, "login/login", post)
 	}
 }

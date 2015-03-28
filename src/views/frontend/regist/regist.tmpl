@@ -9,10 +9,8 @@
         <label alt='请输入E-mail' placeholder='E-mail'></label>
 		<input required="" name="password" type="password" class="inputtext" maxlength="40" value=""/>
         <label alt='请输入密码' placeholder='密码'></label>
-		<div class="left-text">
-			<input name="remember" type="checkbox" value="1" {{if .Remember}} checked=checked {{end}}>
-			30天内免登录
-		</div>
+		<input required="" name="repassword" type="password" class="inputtext" maxlength="40" value=""/>
+        <label alt='请再次输入密码' placeholder='确认密码'></label>
 		<ul class="nav center-text">
 			<li><button type="submit" class="btn">登录</button></li>
 			<li class="btn"><a href="/regist">注册</a></li>
@@ -20,4 +18,10 @@
 	</div>
 </form>
 <div>
+利用条款 <br />
+*, <br />
+*, <br />
+*, <br />
+*, <br />
+*, <br />
 </div>

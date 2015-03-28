@@ -11,7 +11,55 @@ import (
 )
 
 //ログイン
-func (c Contrller) LoginIndex(req *http.Request, r render.Render, db DbSession, session sessions.Session) {
+func (c Contrller) LoginIndex(r render.Render, db DbSession, session sessions.Session) {
+	c.loginedAutoRedirect(session, r, db)
+	c.HTML(r, 200, "login/login", nil)
+}
+
+//ログインチェック
+func (c Contrller) LoginIndexPost(req *http.Request, r render.Render, db DbSession, session sessions.Session) {
+
+	post := struct {
+		User     models.User
+		Remember string
+		Message  string
+	}{
+		User: models.User{
+			Email:    req.PostFormValue("email"),
+			Password: req.PostFormValue("password"),
+		},
+		Remember: req.PostFormValue("remember"),
+		Message:  "",
+	}
+
+	if len(post.User.Email) < 5 || len(post.User.Password) < 6 {
+		post.Message = "请正确输入帐号密码"
+		c.HTML(r, 403, "login/login", post)
+		return
+	}
+	if "1" == post.Remember {
+		session.Options(sessions.Options{
+			MaxAge: 3600 * 24 * 30, //30days
+		})
+	}
+	err := db.Read(post.User).Find(bson.M{"email": post.User.Email, "password": post.User.Password}).One(&post.User)
+	if err == nil {
+		session.Set(config.SessionAuth, post.User.Id.Hex())
+		c.autoRedirect(session, r)
+	} else {
+		post.Message = "帐号或密码错误"
+		c.HTML(r, 403, "login/login", post)
+	}
+}
+
+//ログアウト
+func (c Contrller) LogoutIndex(req *http.Request, r render.Render, db DbSession, session sessions.Session) {
+	session.Delete(config.SessionAuth)
+	c.autoRedirect(session, r)
+}
+
+//
+func (c Contrller) loginedAutoRedirect(session sessions.Session, r render.Render, db DbSession) {
 	userid := session.Get(config.SessionAuth)
 	//var user models.User
 	if nil != userid {
@@ -24,41 +72,4 @@ func (c Contrller) LoginIndex(req *http.Request, r render.Render, db DbSession, 
 			}
 		}
 	}
-	c.HTML(r, 200, "login/login", nil)
-}
-
-//ログインチェック
-func (c Contrller) LoginIndexPost(req *http.Request, r render.Render, db DbSession, session sessions.Session) {
-	post := struct {
-		Email    string
-		Password string
-		Remember string
-		Message  string
-	}{
-		Email:    req.PostFormValue("email"),
-		Password: req.PostFormValue("password"),
-		Remember: req.PostFormValue("remember"),
-		Message:  "",
-	}
-
-	if "1" == post.Remember {
-		session.Options(sessions.Options{
-			MaxAge: 3600 * 24 * 30, //30days
-		})
-	}
-	user := models.User{}
-	err := db.Read(user).Find(bson.M{"email": post.Email, "password": post.Password}).One(&user)
-	if err == nil {
-		session.Set(config.SessionAuth, user.Id.Hex())
-		c.autoRedirect(session, r)
-	} else {
-		post.Message = "帐号或密码错误"
-		c.HTML(r, 200, "login/login", post)
-	}
-}
-
-//ログアウト
-func (c Contrller) LogoutIndex(req *http.Request, r render.Render, db DbSession, session sessions.Session) {
-	session.Delete(config.SessionAuth)
-	c.autoRedirect(session, r)
 }

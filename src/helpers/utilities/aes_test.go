@@ -1,20 +1,13 @@
 package utilities
 
 import (
-	"fmt"
+	"testing"
 )
 
-func Test_Aes() {
+func Test_Aes(t *testing.T) {
 	a := Aes{}
-
-	result, err := a.AesEncrypt("martini-mvc")
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(result)
-	origData, err := a.AesDecrypt(result)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(origData)
+	result := a.AesEncrypt("martini-mvc")
+	t.Log(result)
+	origData := a.AesDecrypt(result)
+	t.Log(origData)
 }

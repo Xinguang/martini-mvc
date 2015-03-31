@@ -328,6 +328,7 @@ address {
 	margin: 15px 0px;
 }
 .templatemo_form .btn {
+  float:left;
   width: 160px;
   line-height: 34px;
   color: #ffffff;

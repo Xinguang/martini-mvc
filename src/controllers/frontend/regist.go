@@ -20,9 +20,9 @@ func (c Contrller) RegistIndexPost(req *http.Request, r render.Render, db DbSess
 		Message    string
 	}{
 		User: models.User{
-			Email:    req.PostFormValue("email"),
-			Password: req.PostFormValue("password"),
-			Permission:0
+			Email:      req.PostFormValue("email"),
+			Password:   req.PostFormValue("password"),
+			Permission: 0,
 		},
 		RePassword: req.PostFormValue("repassword"),
 		Message:    "",

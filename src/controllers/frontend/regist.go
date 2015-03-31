@@ -22,11 +22,25 @@ func (c Contrller) RegistIndexPost(req *http.Request, r render.Render, db DbSess
 		User: models.User{
 			Email:    req.PostFormValue("email"),
 			Password: req.PostFormValue("password"),
+			Permission:0
 		},
 		RePassword: req.PostFormValue("repassword"),
 		Message:    "",
 	}
-
+	/*
+		post := struct {
+			models.User
+			RePassword string
+			Message    string
+		}{
+			models.User{
+				Email:    req.PostFormValue("email"),
+				Password: req.PostFormValue("password"),
+			},
+			req.PostFormValue("repassword"),
+			"",
+		}
+	*/
 	if len(post.User.Email) < 5 || len(post.User.Password) < 6 {
 		post.Message = "请正确输入帐号密码"
 		c.HTML(r, 403, "regist/regist", post)

@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+//被映射 控制器 方法名 的规则
 const _methodname ExRegexp = "(?P<controller>[A-Z][a-z]+)(?P<action>[A-Z][a-z]+)?(?P<method>[A-Z][a-z]+)?"
 const _id string = "(:id)?"
 const _slash string = "(\\/*)"
@@ -18,6 +19,7 @@ type appRouter struct {
 	martini.Router
 }
 
+//创建路由
 func newRouter(m martini.Router, adminpath string) {
 	app := appRouter{m}
 	app.backendRouter(adminpath)
@@ -29,18 +31,22 @@ func newRouter(m martini.Router, adminpath string) {
 		r.HTML(404, "404", "notfound", opt)
 	})
 }
+
+//前台路由
 func (app appRouter) frontendRouter() {
 	base := PathOptions{Layout: "frontend/layout/layout", ViewPath: "frontend/"}
 	c := f.Contrller{base}
 	app.autoRouter(&c, _slash)
 }
 
+//后台路由
 func (app appRouter) backendRouter(adminpath string) {
 	base := PathOptions{Layout: "backend/layout/layout", ViewPath: "backend/"}
 	c := b.Contrller{base}
 	app.autoRouter(&c, _slash+adminpath+_slash)
 }
 
+//自动映射
 func (app appRouter) autoRouter(i interface{}, groupurl string) {
 	s := reflect.ValueOf(i).Elem()
 	t := s.Type()
@@ -61,27 +67,12 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 				if "index" == action {
 					app.setRouter(r, controller, method, f.Interface())
 				}
-				/*
-					switch method {
-					case "post":
-						r.Post(url, f.Interface())
-					case "delete":
-						r.Delete(url, f.Interface())
-					case "patch":
-						r.Patch(url, f.Interface())
-					case "put":
-						r.Put(url, f.Interface())
-					default: //"get"
-						r.Get(url, f.Interface())
-						if "index" == action {
-							r.Get(controller, f.Interface())
-						}
-					}
-				*/
 			}
 		}
 	})
 }
+
+//根据请求方式设置接口
 func (app appRouter) setRouter(r martini.Router, url string, method string, i interface{}) {
 	switch method {
 	case "post":

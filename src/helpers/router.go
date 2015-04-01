@@ -15,10 +15,10 @@ const _id string = "(:id)?"
 const _slash string = "(\\/*)"
 
 type appRouter struct {
-	*martini.ClassicMartini
+	martini.Router
 }
 
-func newRouter(m *martini.ClassicMartini, adminpath string) {
+func newRouter(m martini.Router, adminpath string) {
 	app := appRouter{m}
 	app.backendRouter(adminpath)
 	app.frontendRouter()

@@ -3,11 +3,14 @@ package helpers
 import (
 	"encoding/json"
 	"github.com/go-martini/martini"
+	//"github.com/martini-contrib/csrf"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/secure"
+	//"github.com/starboychina/martini-mvc/src/config"
 	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
 	"html/template"
 	"io/ioutil"
+	//"net/http"
 )
 
 type webConfig struct {
@@ -19,7 +22,7 @@ type webConfig struct {
 	Database  DbConfig `json:"database"`
 }
 
-func Initialization() *martini.ClassicMartini {
+func Initialization() *martini.Martini {
 	configfile, e := ioutil.ReadFile("config/config.json")
 	var w webConfig = webConfig{
 		Static:    "public",
@@ -34,26 +37,43 @@ func Initialization() *martini.ClassicMartini {
 	return w.getMartini()
 }
 
-func (w *webConfig) getMartini() *martini.ClassicMartini {
+func (w *webConfig) getMartini() *martini.Martini {
 
-	m := martini.Classic()
+	r := martini.NewRouter()
+	newRouter(r, w.Admin)
+
+	m := martini.New()
 	//m.Use(martini.Logger())
 	m.Use(martini.Recovery())
 	if len(w.Static) != 0 {
-		m.Use(martini.Static(w.Static))
+		m.Use(martini.Static(w.Static, martini.StaticOptions{SkipLogging: true}))
 	}
+	m.MapTo(r, (*martini.Routes)(nil))
+	m.Action(r.Handle)
+
 	m.Use(w.getRenderer())
 	m.Use(DataHelper(w.Database))
-	newRouter(m, w.Admin)
 	m.Use(secure.Secure(secure.Options{
 		SSLRedirect: true,
 		SSLHost:     ":443", // This is optional in production. The default behavior is to just redirect the request to the https protocol. Example: http://github.com/some_page would be redirected to https://github.com/some_page.
 	}))
+
 	m.Use(w.Session())
 	m.Use(w.Auth)
+
+	return m
+
+	/*
+		m.Use(csrf.Generate(&csrf.Options{
+			Secret:     w.Secret,
+			SessionKey: config.SessionCsrf,
+			// Custom error response.
+			ErrorFunc: func(w http.ResponseWriter) {
+				http.Error(w, "CSRF token validation failed", http.StatusBadRequest)
+			}}))
+	*/
 	//m.RunOnAddr(":80")
 	//m.Run()
-	return m
 }
 
 func (w *webConfig) getRenderer() martini.Handler {

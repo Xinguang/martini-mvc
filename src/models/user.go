@@ -22,10 +22,3 @@ type User struct {
 	Shippings  []Shipping `bson:"shipping"`   //常用寄送地址
 	BaseModel
 }
-type Shipping struct {
-	Id      bson.ObjectId `bson:"_id"`
-	Name    string        `bson:"name"`    //收货人
-	Address string        `bson:"address"` //收货地址
-	Tel     string        `bson:"tel"`     //收货人电话
-	Mobile  string        `bson:"mobile"`  //收货人手机
-}

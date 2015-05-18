@@ -1,7 +1,7 @@
 package backend
 
 import (
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
+	. "../../helpers/utilities"
 )
 
 type Contrller struct {

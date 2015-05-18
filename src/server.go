@@ -1,7 +1,7 @@
 package main
 
 import (
-	h "github.com/starboychina/martini-mvc/src/helpers"
+	h "./helpers"
 	"log"
 	"net/http"
 )

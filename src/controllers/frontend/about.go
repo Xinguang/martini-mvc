@@ -4,8 +4,8 @@ import (
 	//	"fmt"
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
-	//	"github.com/starboychina/martini-mvc/src/models"
+	. "../../helpers/utilities"
+	//	"../../models"
 	//	"gopkg.in/mgo.v2/bson"
 )
 

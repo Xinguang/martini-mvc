@@ -12,6 +12,11 @@ func (c Contrller) UserIndexGet(args martini.Params, r render.Render) {
 		print(value)
 	}
 
+	opt := render.HTMLOptions{
+		Layout: c.PathOptions.Layout,
+	}
+
 	f := args["id"] + "topcontroller"
-	r.HTML(200, c.ViewPath+"user/pofile", f)
+	r.HTML(200, c.ViewPath+"default/about", f, opt)
+	//r.HTML(200, c.ViewPath+"user/pofile", f)
 }

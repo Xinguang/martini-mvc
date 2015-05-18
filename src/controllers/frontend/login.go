@@ -3,9 +3,9 @@ package frontend
 import (
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	"github.com/starboychina/martini-mvc/src/config"
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
-	"github.com/starboychina/martini-mvc/src/models"
+	"../../config"
+	. "../../helpers/utilities"
+	"../../models"
 	"gopkg.in/mgo.v2/bson"
 	"net/http"
 )

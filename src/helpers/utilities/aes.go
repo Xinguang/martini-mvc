@@ -5,7 +5,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
-	"github.com/starboychina/martini-mvc/src/config"
+	"../../config"
 )
 
 type Aes struct {

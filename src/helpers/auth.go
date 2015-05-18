@@ -4,8 +4,8 @@ import (
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	"github.com/starboychina/martini-mvc/src/config"
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
+	"../config"
+	. "./utilities"
 	"net/http"
 )
 

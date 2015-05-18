@@ -3,9 +3,9 @@ package helpers
 import (
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
-	b "github.com/starboychina/martini-mvc/src/controllers/backend"
-	f "github.com/starboychina/martini-mvc/src/controllers/frontend"
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
+	b "../controllers/backend"
+	f "../controllers/frontend"
+	. "./utilities"
 	"reflect"
 	"strings"
 )

@@ -3,8 +3,8 @@ package frontend
 import (
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	"github.com/starboychina/martini-mvc/src/config"
-	. "github.com/starboychina/martini-mvc/src/helpers/utilities"
+	"../../config"
+	. "../../helpers/utilities"
 )
 
 type Contrller struct {

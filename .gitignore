@@ -1,3 +1,5 @@
 *.exe
 src/config/config.json
 src/src
+
+src/server.go

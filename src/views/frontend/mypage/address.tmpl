@@ -1,0 +1,53 @@
+<div class="templatemo-content-wrapper">
+  <div class="templatemo-content">
+    <div class="col-md-12 col-sm-12 margin-bottom-30">
+      <div class="panel panel-primary">
+        <div class="panel-heading">常用地址</div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            <tbody>
+			{{range $element := .Shippings}}
+              <tr>
+                <td>姓名</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{ $element }}" /></td>
+              </tr>
+			{{ end }}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#add_confirm">追加</a></span>
+      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#edit_confirm">修改</a></span>
+    </div> 
+  </div>
+</div>
+<!-- Modal -->
+    <div class="modal fade" id="add_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">追加</h4>
+          </div>
+          <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Yes</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Modal -->
+    <div class="modal fade" id="edit_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">确定修改么?</h4>
+          </div>
+          <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Yes</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>

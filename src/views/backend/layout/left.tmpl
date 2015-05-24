@@ -1,20 +1,38 @@
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="navbar-collapse collapse templatemo-sidebar">
         <ul class="templatemo-sidebar-menu">
-          <li class="active">
+          <li class="{{if isMatch current "/mypage/index"}} active{{end}}">
             <a href="/mypage">
               <i class="fa fa-home"></i>
               会员首页
             </a>
           </li>
-          <li class="sub">
+          <li class="sub{{if isMatch current "/mypage/(pofile|address|point|verified)"}} active open{{end}}">
             <a href="javascript:;">
               <i class="fa fa-cog"></i>个人信息<div class="pull-right"><span class="caret"></span></div>
             </a>
             <ul class="templatemo-submenu">
-              <li><a href="/mypage/pofile">基本信息</a></li>
-              <li><a href="/mypage/address">常用地址</a></li>
-              <li><a href="/mypage/point">积分</a></li>
-              <li><a href="/mypage/verified">实名认证</a></li>
+              <li{{if isMatch current "/mypage/pofile"}} class="active"{{end}}><a href="/mypage/pofile">基本信息</a></li>
+              <li{{if isMatch current "/mypage/address"}} class="active"{{end}}><a href="/mypage/address">常用地址</a></li>
+              <li{{if isMatch current "/mypage/point"}} class="active"{{end}}><a href="/mypage/point">积分</a></li>
+              <li{{if isMatch current "/mypage/verified"}} class="active"{{end}}><a href="/mypage/verified">实名认证</a></li>
             </ul>
           </li>
           <li class="sub open">

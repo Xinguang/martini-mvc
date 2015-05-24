@@ -13,6 +13,7 @@ func GetFuncMap() template.FuncMap {
 		"htmlquote":  f.htmlquote,
 		"str2html":   f.str2html,
 		"dateformat": f.dateformat,
+		"isMatch": f.isMatch,
 	}
 }
 
@@ -45,4 +46,8 @@ func (f funcMap) str2html(raw string) template.HTML {
 
 func (f funcMap) dateformat(unixnano int64) string {
 	return time.Unix(0, unixnano).Format("2006-01-02 15:04:05")
+}
+
+func (f funcMap) isMatch(a string,b ExRegexp) bool {
+	return b.Match(a)
 }

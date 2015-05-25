@@ -5,30 +5,79 @@
         <div class="panel-heading">常用地址</div>
         <div class="panel-body">
           <table class="table table-striped">
-            <tbody>
-			{{range $element := .Shippings}}
+            <thead>
               <tr>
-                <td>姓名</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{ $element }}" /></td>
+                <th class="col-md-1">#</th>
+                <th class="col-md-11">地址</th>
+              </tr>
+            </thead>
+            <tbody>
+			{{range $index,$element := .Shippings}}
+              <tr>
+                <td>{{if eq $index 0 }}默认{{else}}{{$index}}{{end}}</td>
+                <td
+					data-toggle="modal"
+					data-target="#detail_dialog"
+					data-Id="{{ $element.Id }}"
+					data-Name="{{ $element.Name }}"
+					data-Address1="{{ $element.Address1 }}"
+					data-Address2="{{ $element.Address2 }}"
+					data-Zipcode="{{ $element.Zipcode }}"
+					data-Tel="{{ $element.Tel }}"
+					data-Mobile="{{ $element.Mobile }}"
+				>
+				{{ $element.Name }} {{ $element.Address1 }} {{ $element.Address2 }}
+				</td>
               </tr>
 			{{ end }}
             </tbody>
           </table>
         </div>
       </div>
-      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#add_confirm">追加</a></span>
-      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#edit_confirm">修改</a></span>
+      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#detail_dialog">添加</a></span>
     </div> 
   </div>
 </div>
+
+
 <!-- Modal -->
-    <div class="modal fade" id="add_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="detail_dialog" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">追加</h4>
+            <h4 class="modal-title">添加</h4>
           </div>
+	      <div class="modal-body">
+	        <form>
+			  <input type="hidden" id="shippings-id">
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">收货人:</label>
+	            <input type="text" class="form-control" id="shippings-name" placeholder="收货人">
+	          </div>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">省市:</label>
+	            <input type="text" class="form-control" id="shippings-address1" placeholder="收货人地址:省市">
+	          </div>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">详细地址:</label>
+	            <input type="text" class="form-control" id="shippings-address2" placeholder="收货人地址:省市以后的详细地址">
+	          </div>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">邮编:</label>
+	            <input type="text" class="form-control" id="shippings-zipcode" placeholder="邮编">
+	          </div>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">电话:</label>
+	            <input type="text" class="form-control" id="shippings-tel" placeholder="电话">
+	          </div>
+	          <div class="form-group">
+	            <label for="recipient-name" class="control-label">手机:</label>
+	            <input type="text" class="form-control" id="shippings-mobile" placeholder="手机">
+	          </div>
+	        </form>
+	      </div>
+		
           <div class="modal-footer">
             <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Yes</a>
             <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -36,18 +85,33 @@
         </div>
       </div>
     </div>
-<!-- Modal -->
-    <div class="modal fade" id="edit_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">确定修改么?</h4>
-          </div>
-          <div class="modal-footer">
-            <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Yes</a>
-            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
+<script type="text/javascript">
+$(function(){
+	$('#detail_dialog').on('show.bs.modal', function (event) {
+		var element = $(event.relatedTarget);
+		var index = element.prev().text();
+		var modal = $(this);
+		var id,name,addr1,addr2,zipcode,tel,mobile = "";
+		if(index){
+			id = element.attr("data-Id");
+			name = element.attr("data-Name");
+			addr1 = element.attr("data-Address1");
+			addr2 = element.attr("data-Address2");
+			zipcode = element.attr("data-Zipcode");
+			tel = element.attr("data-Tel");
+			mobile = element.attr("data-Mobile");
+		}else{
+			index = "添加"
+		}
+		modal.find('.modal-title').text(index);
+		
+		modal.find('#shippings-id').val(id);
+		modal.find('#shippings-name').val(name);
+		modal.find('#shippings-address1').val(addr1);
+		modal.find('#shippings-address2').val(addr2);
+		modal.find('#shippings-zipcode').val(zipcode);
+		modal.find('#shippings-tel').val(tel);
+		modal.find('#shippings-mobile').val(mobile);
+	})
+});
+</script>

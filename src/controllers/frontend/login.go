@@ -46,7 +46,7 @@ func (c Contrller) LoginIndexPost(req *http.Request, r render.Render, db DbSessi
 	post.User.Password = aes.AesEncrypt(post.User.Password)
 	err := db.Read(post.User).Find(bson.M{"email": post.User.Email, "password": post.User.Password}).One(&post.User)
 	if err == nil {
-		session.Set(config.SessionAuth, post.User.Id.Hex())
+		session.Set(config.SessionAuth, post.User)
 		c.autoRedirect(session, r)
 	} else {
 		post.Message = "帐号或密码错误"
@@ -63,16 +63,12 @@ func (c Contrller) LogoutIndex(req *http.Request, r render.Render, db DbSession,
 
 //
 func (c Contrller) loginedAutoRedirect(session sessions.Session, r render.Render, db DbSession) {
-	userid := session.Get(config.SessionAuth)
+	user := session.Get(config.SessionAuth)
 	//var user models.User
-	if nil != userid {
-		uid, ok := userid.(string)
+	if nil != user {
+		_, ok := user.(models.User)
 		if ok {
-			user := models.User{}
-			err := db.Read(user).FindId(bson.ObjectIdHex(uid)).One(&user)
-			if err == nil {
-				c.autoRedirect(session, r)
-			}
+			c.autoRedirect(session, r)
 		}
 	}
 }

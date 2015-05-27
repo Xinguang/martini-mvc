@@ -6,11 +6,13 @@ import (
 	"github.com/martini-contrib/sessions"
 	"../config"
 	. "./utilities"
+	"../models"
 	"net/http"
+	"encoding/gob"
 )
 
 func (w webConfig) Session() martini.Handler {
-
+	gob.Register(models.User{})
 	store := sessions.NewCookieStore([]byte(w.Secret))
 	store.Options(sessions.Options{
 		MaxAge: 0, //关闭浏览器 即失效

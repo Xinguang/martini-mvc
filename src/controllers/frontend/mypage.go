@@ -1,7 +1,7 @@
 package frontend
 
 import (
-	"fmt"
+	//"fmt"
 	//"encoding/json"
 	"../../config"
 	. "../../helpers/utilities"
@@ -9,7 +9,7 @@ import (
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	"gopkg.in/mgo.v2/bson"
+	//"gopkg.in/mgo.v2/bson"
 )
 
 func (c Contrller) MypageIndexGet(args martini.Params, r render.Render, db DbSession) {
@@ -19,10 +19,8 @@ func (c Contrller) MypageIndexGet(args martini.Params, r render.Render, db DbSes
 //Pofile
 //
 func (c Contrller) MypagePofileGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	uid, _ := session.Get(config.SessionAuth).(string)
-	user := models.User{}
-	err := db.Read(user).FindId(bson.ObjectIdHex(uid)).One(&user)
-	if err == nil {
+	user, ok := session.Get(config.SessionAuth).(models.User)
+	if ok {
 		c.UserHTML(r, 200, "mypage/pofile", user)
 	}
 }
@@ -31,11 +29,8 @@ func (c Contrller) MypagePofileGet(session sessions.Session, args martini.Params
 //Address
 //
 func (c Contrller) MypageAddressGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	uid, _ := session.Get(config.SessionAuth).(string)
-	user := models.User{}
-	err := db.Read(user).FindId(bson.ObjectIdHex(uid)).One(&user)
-	if err == nil {
-		fmt.Println(user.Shippings)
+	user, ok := session.Get(config.SessionAuth).(models.User)
+	if ok {
 		c.UserHTML(r, 200, "mypage/address", user)
 	}
 }
@@ -43,10 +38,8 @@ func (c Contrller) MypageAddressGet(session sessions.Session, args martini.Param
 //Point
 //
 func (c Contrller) MypagePointGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	uid, _ := session.Get(config.SessionAuth).(string)
-	user := models.User{}
-	err := db.Read(user).FindId(bson.ObjectIdHex(uid)).One(&user)
-	if err == nil {
+	user, ok := session.Get(config.SessionAuth).(models.User)
+	if ok {
 		c.UserHTML(r, 200, "mypage/pofile", user)
 	}
 }
@@ -54,10 +47,8 @@ func (c Contrller) MypagePointGet(session sessions.Session, args martini.Params,
 //Verified
 //
 func (c Contrller) MypageVerifiedGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	uid, _ := session.Get(config.SessionAuth).(string)
-	user := models.User{}
-	err := db.Read(user).FindId(bson.ObjectIdHex(uid)).One(&user)
-	if err == nil {
+	user, ok := session.Get(config.SessionAuth).(models.User)
+	if ok {
 		c.UserHTML(r, 200, "mypage/pofile", user)
 	}
 }

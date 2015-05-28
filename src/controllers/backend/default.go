@@ -7,7 +7,7 @@ import (
 func (c Contrller) Default(r render.Render) {
 
 	opt := render.HTMLOptions{
-		Layout: c.PathOptions.Layout,
+		Layout: c.Options.Layout,
 	}
 	r.HTML(200, c.ViewPath+"default/index", nil, opt)
 }

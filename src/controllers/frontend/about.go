@@ -18,7 +18,7 @@ func (c Contrller) AboutIndexGet(args martini.Params, r render.Render, db DbSess
 		}
 		//render.Options
 		opt := render.HTMLOptions{
-			Layout: c.PathOptions.Layout,
+			Layout: c.Options.Layout,
 		}
 		f := args["id"] + "topcontroller"
 		//////////////////////////////////////////

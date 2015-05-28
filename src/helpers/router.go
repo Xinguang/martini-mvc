@@ -3,11 +3,13 @@ package helpers
 import (
 	"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
+	"github.com/martini-contrib/sessions"
 	b "../controllers/backend"
 	f "../controllers/frontend"
 	. "./utilities"
 	"reflect"
 	"strings"
+	"../config"
 )
 
 //被映射 控制器 方法名 的规则
@@ -34,14 +36,14 @@ func newRouter(m martini.Router, adminpath string) {
 
 //前台路由
 func (app appRouter) frontendRouter() {
-	base := PathOptions{Layout: "frontend/layout/layout", ViewPath: "frontend/"}
+	base := Options{Layout: "frontend/layout/layout", ViewPath: "frontend/"}
 	c := f.Contrller{base}
 	app.autoRouter(&c, _slash)
 }
 
 //后台路由
 func (app appRouter) backendRouter(adminpath string) {
-	base := PathOptions{Layout: "backend/layout/layout", ViewPath: "backend/"}
+	base := Options{Layout: "backend/layout/layout", ViewPath: "backend/"}
 	c := b.Contrller{base}
 	app.autoRouter(&c, _slash+adminpath+_slash)
 }
@@ -50,6 +52,10 @@ func (app appRouter) backendRouter(adminpath string) {
 func (app appRouter) autoRouter(i interface{}, groupurl string) {
 	s := reflect.ValueOf(i).Elem()
 	t := s.Type()
+	
+	////////////////
+	metric := s.FieldByName("Options").FieldByName("User")
+	////////////////
 	app.Group(groupurl, func(r martini.Router) {
 		for i := 0; i < s.NumMethod(); i++ {
 			f := s.Method(i)
@@ -58,9 +64,10 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 			controller := strings.ToLower(res["controller"])
 			action := strings.ToLower(res["action"])
 			method := strings.ToLower(res["method"])
+			
 			if "default" == controller {
 				r.Get(_slash, f.Interface())
-				print(groupurl + _slash + "\n")
+				//print(groupurl + _slash + "\n")
 			} else if len(controller) > 0 && len(action) > 0 {
 				url := controller + _slash + action + "(" + _slash + _id + ")?"
 				app.setRouter(r, url, method, f.Interface())
@@ -68,6 +75,12 @@ func (app appRouter) autoRouter(i interface{}, groupurl string) {
 					app.setRouter(r, controller, method, f.Interface())
 				}
 			}
+		}
+	},func(session sessions.Session){
+		v := session.Get(config.SessionAuth)
+		if v != nil {// 获取用户信息
+			sliceValue := reflect.ValueOf(v)
+			metric.Set(sliceValue)
 		}
 	})
 }

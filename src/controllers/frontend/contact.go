@@ -13,7 +13,7 @@ func (c Contrller) ContactIndexGet(args martini.Params, r render.Render) {
 	}
 	//render.Options
 	opt := render.HTMLOptions{
-		Layout: c.PathOptions.Layout,
+		Layout: c.Options.Layout,
 	}
 	f := args["id"] + "topcontroller"
 	r.HTML(200, c.ViewPath+"default/contact", f, opt)

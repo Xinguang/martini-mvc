@@ -8,7 +8,7 @@ import (
 )
 
 type Contrller struct {
-	PathOptions
+	Options
 }
 
 func (c Contrller) autoRedirect(session sessions.Session, r render.Render) {

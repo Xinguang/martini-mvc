@@ -12,10 +12,8 @@
               </tr>
             </thead>
             <tbody>
-			{{range $index,$element := .Shippings}}
-              <tr>
-                <td>{{if eq $index 0 }}默认{{else}}{{$index}}{{end}}</td>
-                <td
+			{{range $index,$element := .session.Shippings}}
+              <tr
 					data-toggle="modal"
 					data-target="#detail_dialog"
 					data-Id="{{ $element.Id }}"
@@ -26,6 +24,8 @@
 					data-Tel="{{ $element.Tel }}"
 					data-Mobile="{{ $element.Mobile }}"
 				>
+                <td>{{if eq $index 0 }}默认{{else}}{{$index}}{{end}}</td>
+                <td>
 				{{ $element.Name }} {{ $element.Address1 }} {{ $element.Address2 }}
 				</td>
               </tr>
@@ -34,7 +34,7 @@
           </table>
         </div>
       </div>
-      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#detail_dialog">添加</a></span>
+      <span class="btn btn-primary" data-toggle="modal" data-target="#detail_dialog"><a href="javascript:;">添加</a></span>
     </div> 
   </div>
 </div>
@@ -89,7 +89,7 @@
 $(function(){
 	$('#detail_dialog').on('show.bs.modal', function (event) {
 		var element = $(event.relatedTarget);
-		var index = element.prev().text();
+		var index = element.find("td").first().text();
 		var modal = $(this);
 		var id,name,addr1,addr2,zipcode,tel,mobile = "";
 		if(index){

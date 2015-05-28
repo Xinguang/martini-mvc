@@ -5,7 +5,7 @@ import (
 )
 
 type Contrller struct {
-	PathOptions
+	Options
 }
 
 func (c Contrller) AdminIndexGet() {

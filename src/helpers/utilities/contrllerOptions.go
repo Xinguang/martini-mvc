@@ -3,6 +3,7 @@ package utilities
 import (
 	"github.com/martini-contrib/render"
 	"../../models"
+	"../../config"
 )
 
 type Options struct {
@@ -25,6 +26,7 @@ func (p Options) UserHTML(r render.Render, status int, name string, v interface{
 	value := map[string]interface{}{
         "this":v,
         "session":p.User,
+		"permission":config.Permission,
     };
 	r.HTML(status, p.ViewPath+name, value, opt)
 }

@@ -1,0 +1,73 @@
+<div class="templatemo-content-wrapper">
+  <div class="templatemo-content">
+    <div class="col-md-12 col-sm-12 margin-bottom-30">
+      <div class="panel panel-primary">
+        <div class="panel-heading">基本信息</div>
+        <div class="panel-body">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>姓名</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Name}}" /></td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Email}}" /></td>
+              </tr>
+              <tr>
+                <td>住址</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Address}}" /></td>
+              </tr>
+              <tr>
+                <td>电话</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Tel}}" /></td>
+              </tr>
+              <tr>
+                <td>传真</td>
+                <td><input name="name" type="text" class="col-md-12" value="{{.session.Fax}}" /></td>
+              </tr>
+              <tr>
+                <td>手机</td>
+                <td><input name="name" type="text" class="col-md-12" value="{{.session.Mobile}}" /></td>
+              </tr>
+              <tr>
+                <td>QQ</td>
+                <td><input name="name" type="text" class="col-md-12" value="{{.session.QQ}}" /></td>
+              </tr>
+              <tr>
+                <td>微信</td>
+                <td><input name="name" type="text" class="col-md-12" value="{{.session.Wechat}}" /></td>
+              </tr>
+              <tr>
+                <td>积分</td>
+                <td>{{.session.Point}}</td>
+              </tr>
+			{{/***
+              <tr>
+                <td>权限</td>
+                <td>{{.session.Permission}}</td>
+              </tr>
+			***/}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <span class="btn btn-primary"><a href="javascript:;" data-toggle="modal" data-target="#edit_confirm">修改</a></span>
+    </div> 
+  </div>
+</div>
+<!-- Modal -->
+    <div class="modal fade" id="edit_confirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">确定修改么?</h4>
+          </div>
+          <div class="modal-footer">
+            <a href="javascript:;" class="btn btn-primary" data-dismiss="modal">Yes</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>

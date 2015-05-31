@@ -17,13 +17,13 @@
               <li{{if isMatch current "/mypage/verified"}} class="active"{{end}}><a href="/mypage/verified">实名认证</a></li>
             </ul>
           </li>
-          <li class="sub open">
+          <li class="sub{{if isMatch current "/mypage/(item|order)"}} active open{{end}}">
             <a href="javascript:;">
               <i class="fa fa-database"></i>我的仓库<div class="pull-right"><span class="caret"></span></div>
             </a>
             <ul class="templatemo-submenu">
-              <li><a href="/mypage/item">货物管理</a></li>
-              <li><a href="/mypage/order">订单管理</a></li>
+              <li{{if isMatch current "/mypage/item"}} class="active"{{end}}><a href="/mypage/item">货物管理</a></li>
+              <li{{if isMatch current "/mypage/order"}} class="active"{{end}}><a href="/mypage/order">订单管理</a></li>
             </ul>
           </li>
           <li><a href="javascript:;" data-toggle="modal" data-target="#confirmModal"><i class="fa fa-sign-out"></i>退出</a></li>

@@ -32,11 +32,11 @@ func (c Contrller) MypageAddressGet(session sessions.Session, r render.Render) {
 //Point
 //
 func (c Contrller) MypagePointGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	c.UserHTML(r, 200, "mypage/pofile", nil)
+	c.UserHTML(r, 200, "mypage/point", nil)
 }
 //
 //Verified
 //
 func (c Contrller) MypageVerifiedGet(session sessions.Session, args martini.Params, r render.Render, db DbSession) {
-	c.UserHTML(r, 200, "mypage/pofile", nil)
+	c.UserHTML(r, 200, "mypage/verified", nil)
 }

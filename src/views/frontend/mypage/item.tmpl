@@ -6,13 +6,29 @@
         <div class="panel-body">
           <table class="table table-striped">
             <tbody>
+			{{range $index,$pack := .this}}
               <tr>
-                <td>姓名</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Name}}" /></td>
+                <td>{{$pack.Id}}</td>
+                <td>{{$pack.Owner}}</td>
+              </tr>
+			{{/* 
+				{{$pack.Id}}
+				{{$pack.Owner}}
+				{{$pack.Tracking}}
+				{{$pack.Size}}
+				{{$pack.Image}}
+				{{$pack.Note}}
+				{{$pack.Status}}
+				{{$pack.Item}}
+			*/}}
+			{{ end }}
+              <tr>
+                <td>ID</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.Id}}" /></td>
               </tr>
               <tr>
-                <td>Email</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Email}}" /></td>
+                <td>Owner</td>
+                <td><input required="" name="name" type="text" class="col-md-12" value="{{.Owner}}" /></td>
               </tr>
               <tr>
                 <td>住址</td>

@@ -1,27 +1,37 @@
 package frontend
 
 import (
-	//"fmt"
-	//"encoding/json"
-	//"../../config"
-	//. "../../helpers/utilities"
+//	"fmt"
+//	"encoding/json"
+	"../../config"
+	. "../../helpers/utilities"
 	"../../models"
 	//"github.com/go-martini/martini"
 	"github.com/martini-contrib/render"
 	"github.com/martini-contrib/sessions"
-	//"gopkg.in/mgo.v2/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 //
 //item
 //
-func (c Contrller) MypageItemGet(session sessions.Session, r render.Render) {
-	itemList := models.Package{
-	}
-	c.UserHTML(r, 200, "mypage/item", itemList)
+func (c Contrller) MypageItemGet(session sessions.Session,r render.Render,db DbSession) {
+//	itemList := c.getItemTestData(session);
+	
+//	errinsert := db.Write(itemList).Insert(itemList)
+//	fmt.Println("errinsert:", errinsert)
+	//bson.ObjectIdHex(id) //stringg to hex
+	user := session.Get(config.SessionAuth)
+	
+	v, _ := user.(models.User)
+	packlist := []models.Package{}
+	db.Read(models.Package{}).Find(bson.M{"owner": v.Id}).All(&packlist)
+//	res, _ := json.Marshal(packlist)
+//	fmt.Println(string(res))
+	c.UserHTML(r, 200, "mypage/item", packlist)	
 }
 //
 //item
 //
-func (c Contrller) MypageOrderGet(session sessions.Session, r render.Render) {
+func (c Contrller) MypageOrderGet(r render.Render) {
 	c.UserHTML(r, 200, "mypage/order", nil)
 }

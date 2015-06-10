@@ -17,14 +17,14 @@ import (
 func (c Contrller) MypageItemGet(session sessions.Session,r render.Render,db DbSession) {
 //	itemList := c.getItemTestData(session);
 	
-//	errinsert := db.Write(itemList).Insert(itemList)
-//	fmt.Println("errinsert:", errinsert)
+//	db.Write(itemList).Insert(itemList)
+	//fmt.Println("errinsert:", errinsert)
 	//bson.ObjectIdHex(id) //stringg to hex
 	user := session.Get(config.SessionAuth)
 	
 	v, _ := user.(models.User)
 	packlist := []models.Package{}
-	db.Read(models.Package{}).Find(bson.M{"owner": v.Id}).All(&packlist)
+	db.Read(packlist).Find(bson.M{"owner": v.Id}).Sort("basemodel.date_insert").All(&packlist)
 //	res, _ := json.Marshal(packlist)
 //	fmt.Println(string(res))
 	c.UserHTML(r, 200, "mypage/item", packlist)	

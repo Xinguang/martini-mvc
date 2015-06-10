@@ -5,11 +5,17 @@
         <div class="panel-heading">基本信息</div>
         <div class="panel-body">
           <table class="table table-striped">
+            <thead>
+				<tr>
+					<th class="col-md-3">单号</th>
+					<th class="col-md-9">描述</th>
+				</tr>
+			</thead>
             <tbody>
 			{{range $index,$pack := .this}}
               <tr>
-                <td>{{$pack.Id}}</td>
-                <td>{{$pack.Owner}}</td>
+                <td>{{$pack.Id.Hex}}</td>
+                <td>{{$pack.Note}}</td>
               </tr>
 			{{/* 
 				{{$pack.Id}}

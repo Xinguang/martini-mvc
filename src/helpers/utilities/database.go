@@ -59,9 +59,22 @@ func (db DbSession) Write(i interface{}) *mgo.Collection {
 
 func (db DbSession) getTableName(i interface{}) string {
 	v := reflect.ValueOf(i)
+	if v.Type().Kind() == reflect.Slice {
+		return strings.ToLower(v.Type().Elem().Name())
+		
+	}
 	return strings.ToLower(v.Type().Name())
 }
 
+func (db DbSession) Populate(result interface{},filedNmae string ,filedinterface interface{}){
+
+//	for key, value := range result {
+//		print(key)
+//		print(value)
+//	}
+//	db.Read(filedinterface).Find().All(&filedinterface)
+	
+}
 //item := models.Item{}
 /*
 	users := []models.User{}

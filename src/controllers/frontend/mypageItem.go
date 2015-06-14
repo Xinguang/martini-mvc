@@ -25,6 +25,9 @@ func (c Contrller) MypageItemGet(session sessions.Session,r render.Render,db DbS
 	v, _ := user.(models.User)
 	packlist := []models.Package{}
 	db.Read(packlist).Find(bson.M{"owner": v.Id}).Sort("basemodel.date_insert").All(&packlist)
+	
+	db.Populate(packlist,"Owner")
+	
 //	res, _ := json.Marshal(packlist)
 //	fmt.Println(string(res))
 	c.UserHTML(r, 200, "mypage/item", packlist)	

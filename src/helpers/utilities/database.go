@@ -3,8 +3,12 @@ package utilities
 import (
 	"github.com/go-martini/martini"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+	. "github.com/ahmetalpbalkan/go-linq"
+	"fmt"
 	"reflect"
 	"strings"
+	"../../models"
 )
 
 type DbConfig struct {
@@ -66,14 +70,23 @@ func (db DbSession) getTableName(i interface{}) string {
 	return strings.ToLower(v.Type().Name())
 }
 
-func (db DbSession) Populate(result interface{},filedNmae string ,filedinterface interface{}){
 
-//	for key, value := range result {
-//		print(key)
-//		print(value)
-//	}
-//	db.Read(filedinterface).Find().All(&filedinterface)
-	
+
+
+func (db DbSession) Populate(result T,filedNmae string){
+	getOwner := func(in T) (T, error) {
+		s := reflect.ValueOf(in)
+		filed := s.FieldByName(filedNmae)
+		if filed.IsValid() && filed.Type().String() == "bson.ObjectId" {
+			return filed.Interface().(bson.ObjectId),nil
+		}
+		return in, nil 
+	}
+	owners, _ := From(result).Select(getOwner).Distinct().Results()
+	fmt.Println(owners)
+	users := []models.User{}
+	db.Read(users).Find(bson.M{ "_id": bson.M{ "$in": owners }  }).All(&users)//
+	fmt.Println(users)
 }
 //item := models.Item{}
 /*

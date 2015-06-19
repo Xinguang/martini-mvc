@@ -60,10 +60,24 @@ func (c Contrller) RegistIndexPost(req *http.Request, r render.Render, db DbSess
 		post.User.Id = bson.NewObjectId()
 		aes := Aes{}
 		post.User.Password = aes.AesEncrypt(post.User.Password)
+		
+//		shipping := models.Shipping{
+//				Id:bson.NewObjectId(),
+//				Name :"收货人",
+//				Zipcode:"收货邮编",
+//				Address1:"收货地址 省市",
+//				Address2:"收货地址 详细地址",
+//				Tel:"收货人电话",
+//				Mobile:"收货人手机",
+//			};
+//		post.User.Shippings = []models.Shipping{shipping}
+		
+		
 		errinsert := db.Write(post.User).Insert(post.User)
 		if nil == errinsert {
 			r.Redirect("/login", 301)
 		}
+		println(errinsert)
 		r.Redirect("/503", 301)
 	}
 }

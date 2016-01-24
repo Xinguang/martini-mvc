@@ -71,20 +71,39 @@ func (db DbSession) getTableName(i interface{}) string {
 
 
 
-func (db DbSession) Populate(result T,filedNmae string){
+func (db DbSession) Populate(result T,filedName string){
 	getOwner := func(in T) (T, error) {
 		s := reflect.ValueOf(in)
-		filed := s.FieldByName(filedNmae)
+		filed := s.FieldByName(filedName)
 		if filed.IsValid() && filed.Type().String() == "bson.ObjectId" {
 			return filed.Interface().(bson.ObjectId),nil
 		}
 		return in, nil 
 	}
 	owners, _ := From(result).Select(getOwner).Distinct().Results()
-	fmt.Println(owners)
+//	fmt.Println(owners)
 	users := []models.User{}
 	db.Read(users).Find(bson.M{ "_id": bson.M{ "$in": owners }  }).All(&users)//
-	fmt.Println(users)
+//	fmt.Println(users)
+	
+	joinOwner := func(in T) (bool, error) {
+		s := reflect.ValueOf(in)
+		filed := s.FieldByName(filedName)
+		if filed.IsValid() && filed.Type().String() == "bson.ObjectId" {
+			user,_ := From(users).Single(func(user T)(bool,error){
+				return user.(models.User).Id == filed.Interface().(bson.ObjectId),nil
+			})
+			//filed.Set(reflect.ValueOf(user))
+			
+			filed.Set(user)
+	
+	
+			return true,nil
+		}
+		return true, nil 
+	}
+	res, _ := From(result).Where(joinOwner).Results()
+	fmt.Println(res)
 }
 //item := models.Item{}
 /*

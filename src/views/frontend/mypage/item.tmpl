@@ -15,61 +15,21 @@
 			{{range $index,$pack := .this}}
               <tr>
                 <td>{{$pack.Id.Hex}}</td>
-                <td>{{$pack.Note}}</td>
-              </tr>
-			{{/* 
-				{{$pack.Id}}
-				{{$pack.Owner}}
-				{{$pack.Tracking}}
-				{{$pack.Size}}
-				{{$pack.Image}}
+                <td>
 				{{$pack.Note}}
-				{{$pack.Status}}
-				{{$pack.Item}}
-			*/}}
+				<div>
+					<div>{{$pack.Id}}</div>
+					<div>{{$pack.Owner}}</div>
+					<div>{{$pack.Tracking}}</div>
+					<div>{{$pack.Size}}</div>
+					<div>{{$pack.Image}}</div>
+					<div>{{$pack.Note}}</div>
+					<div>{{$pack.Status}}</div>
+					<div>{{$pack.Item}}</div>
+				</div>
+				</td>
+              </tr>
 			{{ end }}
-              <tr>
-                <td>ID</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.Id}}" /></td>
-              </tr>
-              <tr>
-                <td>Owner</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.Owner}}" /></td>
-              </tr>
-              <tr>
-                <td>住址</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Address}}" /></td>
-              </tr>
-              <tr>
-                <td>电话</td>
-                <td><input required="" name="name" type="text" class="col-md-12" value="{{.session.Tel}}" /></td>
-              </tr>
-              <tr>
-                <td>传真</td>
-                <td><input name="name" type="text" class="col-md-12" value="{{.session.Fax}}" /></td>
-              </tr>
-              <tr>
-                <td>手机</td>
-                <td><input name="name" type="text" class="col-md-12" value="{{.session.Mobile}}" /></td>
-              </tr>
-              <tr>
-                <td>QQ</td>
-                <td><input name="name" type="text" class="col-md-12" value="{{.session.QQ}}" /></td>
-              </tr>
-              <tr>
-                <td>微信</td>
-                <td><input name="name" type="text" class="col-md-12" value="{{.session.Wechat}}" /></td>
-              </tr>
-              <tr>
-                <td>积分</td>
-                <td>{{.session.Point}}</td>
-              </tr>
-			{{/***
-              <tr>
-                <td>权限</td>
-                <td>{{.session.Permission}}</td>
-              </tr>
-			***/}}
             </tbody>
           </table>
         </div>

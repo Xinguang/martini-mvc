@@ -6,12 +6,10 @@
 	"secret" :"13B3AE09594A1A6B4C2E2046F098B6A6568E6F48979DB871A4FBC0FD861464FA",
 	
 	"database" :{
-		"name":"test",
-		"user":"",
-		"password":"",
+		"name":"zhuanyun",
 		"host":{
-			"read" :"192.168.0.31",
-			"write" :"192.168.0.30"
+			"read" :"mongodb://user:password@ds045001.mongolab.com:45001/zhuanyun", 
+			"write" :"mongodb://user:password@ds045001.mongolab.com:45001/zhuanyun"
 		}
 	}
 	
